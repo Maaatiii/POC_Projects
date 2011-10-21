@@ -27,13 +27,56 @@
         {
             padding: 2px;
         }
-    </style>
+    </style>    
+
     <script type="text/javascript">
-        var getRowClass = function (record, index) {
-            if (record.data.Disabled) {
-                return "x-item-disabled";
+        // Ext 3.3.1
+        // added feature: moveEditorOnEnterLikeOnTab
+        Ext.override(Ext.grid.RowSelectionModel, {
+            moveEditorOnEnterLikeOnTab: false, // patch
+
+            onEditorKey: function (field, e) {
+                var k = e.getKey(),
+            newCell,
+            g = this.grid,
+            last = g.lastEdit,
+            ed = g.activeEditor,
+            shift = e.shiftKey,
+            ae, last, r, c;
+                var rows = g.store.getCount();
+
+                if (k == e.UP) {
+                    var nextRow = ed.row - 1;
+                    if (nextRow < 0)
+                        nextRow = rows - 1;
+
+                    g.startEditing(nextRow, ed.col);
+                }
+                if (k == e.DOWN) {
+                    g.startEditing((ed.row + 1) % rows, ed.col);
+                }
+                if (k == e.RIGHT) {
+                    var nextCol = ed.col + 1;
+                    if (nextCol == 6)
+                        nextCol = 1;
+
+                    g.startEditing(ed.row, nextCol);
+                }
+                if (k == e.LEFT) {
+                    var nextCol = ed.col - 1;
+                    if (nextCol == 0)
+                        nextCol = 5;
+
+                    g.startEditing(ed.row, nextCol);
+                }
             }
-        };
+        });
+        
+        function setAvailabilityOfRecordSet(indexOfRow, store, disabled) {
+            for (var i = indexOfRow + 1; i <= store.data.items.length - 1; i++) {
+                store.data.items[i].set('Disabled', disabled);
+            }
+        }
 
         function updateGridDataAfterEdit(e) {
             var from = e.record.data.From;
@@ -53,7 +96,7 @@
                 }
             }
 
-            if (e.field == 'To') {                
+            if (e.field == 'To') {
                 var newValueTo = parseInt(e.value);
 
                 if (from != '' && from > newValueTo)
@@ -63,7 +106,7 @@
                 if (newValueTo >= 84) {
                     e.value = 84;
                     setAvailabilityOfRecordSet(e.row, store, true);
-                }                
+                }
                 else if (to == 84 && newValueTo < 84) {
                     setAvailabilityOfRecordSet(e.row, store, false);
 
@@ -85,18 +128,22 @@
             return true;
         }
 
-        function setAvailabilityOfRecordSet(indexOfRow, store, disabled) {
-            for (var i = indexOfRow + 1; i <= store.data.items.length - 1; i++) {
-                store.data.items[i].set('Disabled', disabled);
+        var getRowClass = function (record, index) {
+            if (record.data.Disabled) {
+                return "x-item-disabled";
             }
-        }
+        }        
 
-        var formatValue = function (value, metadata, record, rowIndex, colIndex, store) {            
+        var formatValue = function (value, metadata, record, rowIndex, colIndex, store) {
             if (value == null) { return ' '; }
             else return value;
-        };
+        }
     </script>
-    <ext:Panel ID="panMain" runat="server" Width="500" Height="600" Padding="10">
+
+    <%--<script type="text/javascript" src="Scripts/CommonScripts.js" />--%>
+    
+    <ext:FormPanel ID="panMain" runat="server" Width="500" Height="600" Padding="30"
+        Title="Tabela">
         <Items>
             <ext:GridPanel ID="grid" runat="server" Width="400" Height="290" AutoDataBind="true"
                 ClicksToEdit="1" EnableHdMenu="false" EnableDragDrop="false">
@@ -105,12 +152,12 @@
                         <Reader>
                             <ext:JsonReader IDProperty="Id">
                                 <Fields>
-                                    <ext:RecordField Name="Id" Type="Int"/>
+                                    <ext:RecordField Name="Id" Type="Int" />
                                     <ext:RecordField Name="From" Type="String" AllowBlank="true" />
-                                    <ext:RecordField Name="To" Type="String"  AllowBlank="true"/>
-                                    <ext:RecordField Name="Min" Type="String" AllowBlank="true"  />
-                                    <ext:RecordField Name="Default" Type="String" AllowBlank="true"  />
-                                    <ext:RecordField Name="Max" Type="String" AllowBlank="true"  />
+                                    <ext:RecordField Name="To" Type="String" AllowBlank="true" />
+                                    <ext:RecordField Name="Min" Type="String" AllowBlank="true" />
+                                    <ext:RecordField Name="Default" Type="String" AllowBlank="true" />
+                                    <ext:RecordField Name="Max" Type="String" AllowBlank="true" />
                                     <ext:RecordField Name="Disabled" Type="Boolean" />
                                 </Fields>
                             </ext:JsonReader>
@@ -124,35 +171,41 @@
                 </SelectionModel>
                 <ColumnModel ID="ColumnModel1" runat="server">
                     <Columns>
-                        <ext:Column ColumnID="Id" Header="Id" Width="30" DataIndex="Id" Sortable="false"  Resizable="false" Hidden="true"/>
-                        <ext:Column ColumnID="From" Header="From" Width="50" DataIndex="From" Sortable="false" Resizable="false">
+                        <ext:Column ColumnID="Id" Header="Id" Width="30" DataIndex="Id" Sortable="false"
+                            Resizable="false" Hidden="true" />
+                        <ext:Column ColumnID="From" Header="From" Width="50" DataIndex="From" Sortable="false"
+                            Resizable="false">
                             <Editor>
-                                <ext:NumberField runat="server" AllowBlank="false" SelectOnFocus="true">  
-                                </ext:NumberField>
+                                <ext:TextField runat="server" AllowBlank="false" SelectOnFocus="true">
+                                </ext:TextField>
                             </Editor>
                             <Renderer Fn="formatValue" />
                         </ext:Column>
-                        <ext:Column ColumnID="To" Header="To" Width="50" DataIndex="To" Sortable="false" Resizable="false">
+                        <ext:Column ColumnID="To" Header="To" Width="50" DataIndex="To" Sortable="false"
+                            Resizable="false">
                             <Editor>
-                                <ext:NumberField ID="NumberField1" runat="server" AllowBlank="false"  SelectOnFocus="true">                                    
+                                <ext:NumberField ID="NumberField1" runat="server" AllowBlank="false" SelectOnFocus="true">
                                 </ext:NumberField>
                             </Editor>
                         </ext:Column>
-                        <ext:Column ColumnID="Min" Header="Min" Width="80" DataIndex="Min" Sortable="false" Resizable="false">
+                        <ext:Column ColumnID="Min" Header="Min" Width="80" DataIndex="Min" Sortable="false"
+                            Resizable="false">
                             <Editor>
-                                <ext:NumberField ID="NumberField2" runat="server" AllowBlank="false"  SelectOnFocus="true">                                    
+                                <ext:NumberField ID="NumberField2" runat="server" AllowBlank="false" SelectOnFocus="true">
                                 </ext:NumberField>
                             </Editor>
                         </ext:Column>
-                        <ext:Column ColumnID="Default" Header="Default" Width="80" DataIndex="Default" Sortable="false" Resizable="false" >
+                        <ext:Column ColumnID="Default" Header="Default" Width="80" DataIndex="Default" Sortable="false"
+                            Resizable="false">
                             <Editor>
-                                <ext:NumberField ID="NumberField3" runat="server" AllowBlank="false"  SelectOnFocus="true">                                    
+                                <ext:NumberField ID="NumberField3" runat="server" AllowBlank="false" SelectOnFocus="true">
                                 </ext:NumberField>
                             </Editor>
                         </ext:Column>
-                        <ext:Column ColumnID="Max" Header="Max" Width="80" DataIndex="Max" Sortable="false" Resizable="false">
+                        <ext:Column ColumnID="Max" Header="Max" Width="80" DataIndex="Max" Sortable="false"
+                            Resizable="false">
                             <Editor>
-                                <ext:NumberField ID="NumberField4" runat="server" AllowBlank="false"  SelectOnFocus="true">
+                                <ext:NumberField ID="NumberField4" runat="server" AllowBlank="false" SelectOnFocus="true">
                                 </ext:NumberField>
                             </Editor>
                         </ext:Column>
@@ -164,9 +217,19 @@
                 </Listeners>
                 <View>
                     <ext:GridView ForceFit="true">
-                        <getrowclass fn="getRowClass" />
+                        <GetRowClass Fn="getRowClass" />
                     </ext:GridView>
                 </View>
+                <KeyMap>
+                    <ext:KeyBinding StopEvent="true">
+                        <Keys>
+                            <ext:Key Code="N" />
+                        </Keys>
+                        <Listeners>
+                            <Event Handler="alert('lol');" />
+                        </Listeners>
+                    </ext:KeyBinding>
+                </KeyMap>
             </ext:GridPanel>
             <ext:Button ID="btn1" runat="server" Text="Save">
                 <Listeners>
@@ -174,5 +237,15 @@
                 </Listeners>
             </ext:Button>
         </Items>
-    </ext:Panel>
+    </ext:FormPanel>
+    <ext:KeyMap runat="server" Target="={Ext.isGecko ? Ext.getDoc() : Ext.getBody()}">
+        <ext:KeyBinding>
+            <Keys>
+                <ext:Key Code="N" />
+            </Keys>
+            <Listeners>
+                <Event Handler="alert('lol');" />
+            </Listeners>
+        </ext:KeyBinding>
+    </ext:KeyMap>
 </asp:Content>

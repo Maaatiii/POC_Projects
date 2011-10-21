@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CooliteWebApplication", "CooliteWebApplication\CooliteWebApplication.csproj", "{91C0C79E-E735-4DF1-B9E6-237D1B57857A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

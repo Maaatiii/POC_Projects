@@ -27,8 +27,7 @@
         {
             padding: 2px;
         }
-    </style>    
-
+    </style>
     <script type="text/javascript">
         // Ext 3.3.1
         // added feature: moveEditorOnEnterLikeOnTab
@@ -71,7 +70,7 @@
                 }
             }
         });
-        
+
         function setAvailabilityOfRecordSet(indexOfRow, store, disabled) {
             for (var i = indexOfRow + 1; i <= store.data.items.length - 1; i++) {
                 store.data.items[i].set('Disabled', disabled);
@@ -132,16 +131,14 @@
             if (record.data.Disabled) {
                 return "x-item-disabled";
             }
-        }        
+        }
 
         var formatValue = function (value, metadata, record, rowIndex, colIndex, store) {
             if (value == null) { return ' '; }
             else return value;
         }
     </script>
-
     <%--<script type="text/javascript" src="Scripts/CommonScripts.js" />--%>
-    
     <ext:FormPanel ID="panMain" runat="server" Width="500" Height="600" Padding="30"
         Title="Tabela">
         <Items>
@@ -232,9 +229,16 @@
                 </KeyMap>
             </ext:GridPanel>
             <ext:Button ID="btn1" runat="server" Text="Save">
-                <Listeners>
-                    <Click Handler="#{grid}.save();" />
-                </Listeners>
+                <%--<Listeners>
+                            <Click Handler="#{grid}.save();" />
+                        </Listeners>--%>
+                <DirectEvents>
+                    <Click OnEvent="ReadRecords">
+                        <ExtraParams>
+                            <ext:Parameter Name="values" Value="#{grid}.getRowsValues()" Mode="Raw" Encode="true" />
+                        </ExtraParams>
+                    </Click>
+                </DirectEvents>
             </ext:Button>
         </Items>
     </ext:FormPanel>

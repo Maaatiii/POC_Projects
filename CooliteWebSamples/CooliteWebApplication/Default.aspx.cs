@@ -70,6 +70,12 @@ namespace CooliteWebApplication
             BindData();
 
         }
+
+        protected void ReadRecords(object sender, DirectEventArgs e)
+        {
+            string jsonValues = e.ExtraParams["values"];
+            List<RowDefinition> records = JSON.Deserialize<List<RowDefinition>>(jsonValues);                                  
+        }
     }
 
     public class RowDefinition

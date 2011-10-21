@@ -96,7 +96,7 @@
             else return value;
         };
     </script>
-    <ext:Panel ID="panMain" runat="server" Width="500" Height="600" Padding="30">
+    <ext:Panel ID="panMain" runat="server" Width="500" Height="600" Padding="30" Title="Tabela">
         <Items>
             <ext:GridPanel ID="grid" runat="server" Width="400" Height="290" AutoDataBind="true"
                 ClicksToEdit="1" EnableHdMenu="false" EnableDragDrop="false">

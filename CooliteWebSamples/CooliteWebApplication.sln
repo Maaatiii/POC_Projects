@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CooliteWebApplication", "CooliteWebApplication\CooliteWebApplication.csproj", "{91C0C79E-E735-4DF1-B9E6-237D1B57857A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataRepository", "DataRepository\DataRepository.csproj", "{C3E87BB8-E728-4482-9E85-C23A332B5DD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91C0C79E-E735-4DF1-B9E6-237D1B57857A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3E87BB8-E728-4482-9E85-C23A332B5DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3E87BB8-E728-4482-9E85-C23A332B5DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3E87BB8-E728-4482-9E85-C23A332B5DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3E87BB8-E728-4482-9E85-C23A332B5DD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

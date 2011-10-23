@@ -147,9 +147,10 @@
                 <Store>
                     <ext:Store runat="server" OnRefreshData="MyData_Refresh" OnBeforeStoreChanged="HandleChanges">
                         <Reader>
-                            <ext:JsonReader IDProperty="Id">
+                            <ext:JsonReader IDProperty="OrderNumber">
                                 <Fields>
                                     <ext:RecordField Name="Id" Type="Int" />
+                                    <ext:RecordField Name="OrderNumber" Type="Int" />
                                     <ext:RecordField Name="From" Type="String" AllowBlank="true" />
                                     <ext:RecordField Name="To" Type="String" AllowBlank="true" />
                                     <ext:RecordField Name="Min" Type="String" AllowBlank="true" />
@@ -159,7 +160,7 @@
                                 </Fields>
                             </ext:JsonReader>
                         </Reader>
-                        <SortInfo Field="Id" Direction="ASC" />
+                        <SortInfo Field="OrderNumber" Direction="ASC" />
                     </ext:Store>
                 </Store>
                 <SelectionModel>

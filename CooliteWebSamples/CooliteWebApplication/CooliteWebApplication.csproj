@@ -144,9 +144,7 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
@@ -156,6 +154,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Default\Default.skin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataRepository\DataRepository.csproj">
+      <Project>{C3E87BB8-E728-4482-9E85-C23A332B5DD8}</Project>
+      <Name>DataRepository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Data\firstProject.db" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

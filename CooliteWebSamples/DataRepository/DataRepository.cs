@@ -26,7 +26,7 @@ namespace DataRepository
 
         public void SaveOrUpdateRanges(IList<DataRange> ranges)
         {
-            var session = NhibernateSessionFactory.Instance.OpenSession();
+            var session = NhibernateSessionFactory.Instance.OpenSession(); //TODO a
             using (var transaction = session.BeginTransaction())
             {
                 foreach(var r in ranges)
